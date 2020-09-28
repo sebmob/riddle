@@ -2,3 +2,8 @@
   background-color: lightgray;
   padding: 20px;
 }
+
+.div--riddle--container {
+  align-items: center;
+  justify-content: center;
+}
