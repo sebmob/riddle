@@ -1,14 +1,23 @@
 import React from 'react'
 import './Riddle.css'
 
-function Riddle({ riddle, handleChange, handleSubmit }) {
+function Riddle({ riddles, handleChange, handleSubmit, incrementCount, count, answerCorrect, decrementCount, isSolved }) {
     return (
-            <div className="div--riddle--container">
-                <h4>{riddle.question}</h4>
-                <form action="input" onSubmit={handleSubmit}>
-                    <input type="text" onChange={handleChange}/><br></br>
-                    <input type="submit"/>
-                </form>
+            <div className={isSolved.solved && isSolved.id === count ? "div--riddle--container--solved" : "div--riddle--container"}>
+                {riddles.length !== 0 ? 
+                <div>
+                    <h4>{riddles[count].question}</h4>
+                    {isSolved.solved && isSolved.id === count ? <p>Completed!</p> :
+                    <form className="form--container" action="input" onSubmit={handleSubmit}>
+                        <input type="text" onChange={handleChange}/>
+                        <input type="submit"/>
+                    </form>}
+                    <div className="div--button--container">
+                        <button onClick={decrementCount}>Previous</button>  
+                        <button onClick={incrementCount}>Next</button>
+                    </div>
+                </div>
+                : <div></div>}
             </div>
     )
 }

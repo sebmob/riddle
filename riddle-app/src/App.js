@@ -5,27 +5,44 @@ import Riddle from './components/Riddle/Riddle';
 
 function App() {
 
-const [ riddle, setRiddle ] = useState('');
+const [ riddles, setRiddles ] = useState('');
 const [ userInput, setUserInput ] = useState('');
-const [ answerCorrect, setAnswerCorrect ] = useState(false)
+const [ count, setCount ] = useState(0);
+const [ points, setPoints ] = useState(0);
+const [ isSolved, setIsSolved ] = useState({})
 
 const handleChange = (e) => setUserInput(e.target.value);
 
 const handleSubmit = (e) => {
   e.preventDefault();
   e.target.reset();
-  if (userInput === riddle.answer) {
-    setAnswerCorrect(true);
+  if (userInput.toLowerCase() === riddles[count].answer.toLowerCase()) {
+    setPoints(points + 5)
+    setIsSolved({
+      solved: true,
+      id: count
+    })
+    
   }
 }
 
-useEffect(() => {
-  firebase
-    .firestore()
-    .collection('riddles')
-    .doc('prQUPpjodMw7Gx0s8lFy')
-    .get()
-    .then((doc) => setRiddle(doc.data()))
+const incrementCount = () => {
+  if (count !== riddles.length - 1) {
+    setCount(count + 1)
+  }
+}
+
+const decrementCount = () => {
+  if (count !== 0) {
+    setCount(count - 1)
+  }
+}
+
+useEffect( () => {
+  const data = firebase.firestore().collection('riddles')
+    data.get().then((querySnapshot) => {
+      querySnapshot.docs.map((doc) => setRiddles((prevState) => [ ...prevState, doc.data() ]))
+    })
   return () => {
     
   }
@@ -33,8 +50,18 @@ useEffect(() => {
 
   return (
     <div className="App">
-      <header className="header">Riddle Me This...</header>
-        <Riddle riddle={riddle} handleChange={handleChange} handleSubmit={handleSubmit}/>
+      <header className="header">
+        <h3 className="h3--title">Riddle Me This...</h3>
+        <h3 className="h3--points">Points: {points}</h3>
+      </header>
+        <Riddle riddles={riddles}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                incrementCount={incrementCount}
+                decrementCount={decrementCount}
+                count={count}
+                isSolved={isSolved}
+        />
     </div>
   );
 }

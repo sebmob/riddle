@@ -1,9 +1,16 @@
 .header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: lightgray;
-  padding: 20px;
+  padding: 10px;
 }
 
 .div--riddle--container {
   align-items: center;
   justify-content: center;
+}
+
+.h3--points {
+  margin-right: 30px;
 }
