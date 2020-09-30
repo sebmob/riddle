@@ -1,7 +1,7 @@
 import React from 'react'
 import './Riddle.css'
 
-function Riddle({ riddles, handleChange, handleSubmit, incrementCount, count, answerCorrect, decrementCount, isSolved }) {
+function Riddle({ riddles, handleChange, handleSubmit, incrementCount, count, decrementCount, isSolved }) {
     return (
             <div className={isSolved.solved && isSolved.id === count ? "div--riddle--container--solved" : "div--riddle--container"}>
                 {riddles.length !== 0 ? 
