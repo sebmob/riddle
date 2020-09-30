@@ -10,8 +10,9 @@ const [ riddles, setRiddles ] = useState('');
 const [ userInput, setUserInput ] = useState('');
 const [ count, setCount ] = useState(0);
 const [ points, setPoints ] = useState(0);
-const [ isSolved, setIsSolved ] = useState('')
+const [ isSolved, setIsSolved ] = useState([])
 const [ isLogin, setisLogin ] = useState(false)
+const [ user, setUser ] = useState('')
 
 const handleChange = (e) => setUserInput(e.target.value);
 
@@ -20,9 +21,12 @@ const handleSubmit = (e) => {
   e.target.reset();
   if (userInput.toLowerCase() === riddles[count].answer.toLowerCase()) {
     setPoints(points + 5)
+    firebase.firestore().collection('users').doc(user).update({
+      points: points + 5,
+      solved: firebase.firestore.FieldValue.arrayUnion(riddles[count].id)
+    })
     setIsSolved(prevState => [...prevState, {
-      isSolved: true,
-      id: count
+      id: riddles[count].id
     }])
   }
 }
@@ -31,15 +35,23 @@ const handleSubmitLogin = (e) => {
   e.preventDefault()
   e.target.reset()
   let users = [];
+  const doc = firebase.firestore().collection('users').doc(userInput)
+  doc.get().then((doc) => doc.data().solved.map((id) => setIsSolved((prevState => [...prevState, id]))))
+  doc.get().then((doc) => setPoints(doc.data().points))
+
+
   firebase.firestore().collection('users').get().then((querySnapshot) => {
     querySnapshot.docs.map((doc) => {
      return users.push(doc.data().username)
     })
     if (users.includes(userInput)) {
       setisLogin(true)
+      setUser(userInput)
     } else {
-      firebase.firestore().collection('users').doc().set({ username: userInput })
+      firebase.firestore().collection('users').doc(userInput).set({ username: userInput })
       setisLogin(true)
+      setUser(userInput)
+
     }
   })
 }
@@ -56,10 +68,15 @@ const decrementCount = () => {
   }
 }
 
-useEffect( () => {
+useEffect(() => {
   const data = firebase.firestore().collection('riddles')
     data.get().then((querySnapshot) => {
-      querySnapshot.docs.map((doc) => setRiddles((prevState) => [ ...prevState, doc.data() ]))
+      querySnapshot.docs.map((doc) => setRiddles((prevState) => [ ...prevState, {
+        id: doc.id,
+        question: doc.data().question,
+        answer: doc.data().answer
+      }
+      ]))
     })
   return () => {
     
@@ -70,10 +87,11 @@ useEffect( () => {
     <div className="App">
       <header className="header">
         <h3 className="h3--title">Riddle Me This...</h3>
-        <h3 className="h3--points">Points: {points}</h3>
+        <h3 className="h3--points">{user} Points: {points}</h3>
       </header>
       {isLogin ? 
-              <Riddle riddles={riddles}
+              <Riddle 
+              riddles={riddles}
               handleChange={handleChange}
               handleSubmit={handleSubmit}
               incrementCount={incrementCount}
