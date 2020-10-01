@@ -25,20 +25,14 @@ const handleSubmit = (e) => {
       points: points + 5,
       solved: firebase.firestore.FieldValue.arrayUnion(riddles[count].id)
     })
-    setIsSolved(prevState => [...prevState, {
-      id: riddles[count].id
-    }])
+    setIsSolved(prevState => [...prevState, riddles[count].id])
   }
 }
 
-const handleSubmitLogin = (e) => {
+const handleSubmitLogin = async (e) => {
   e.preventDefault()
   e.target.reset()
   let users = [];
-  const doc = firebase.firestore().collection('users').doc(userInput)
-  doc.get().then((doc) => doc.data().solved.map((id) => setIsSolved((prevState => [...prevState, id]))))
-  doc.get().then((doc) => setPoints(doc.data().points))
-
 
   firebase.firestore().collection('users').get().then((querySnapshot) => {
     querySnapshot.docs.map((doc) => {
@@ -47,13 +41,30 @@ const handleSubmitLogin = (e) => {
     if (users.includes(userInput)) {
       setisLogin(true)
       setUser(userInput)
+      getSolved()
+      getPoints()
     } else {
-      firebase.firestore().collection('users').doc(userInput).set({ username: userInput })
+      firebase.firestore().collection('users').doc(userInput).set({ username: userInput, solved: [], points: 0 })
+      .then(() => getSolved)
       setisLogin(true)
       setUser(userInput)
-
     }
   })
+}
+
+const getSolved = async () => {
+  const doc = firebase.firestore().collection('users')
+  await doc.doc(userInput).get()
+  .then((doc) => {
+    doc.data().solved.length > 0 ? doc.data().solved.map((id) => {
+      return setIsSolved((prevState => [...prevState, id])) 
+    }) : setIsSolved([])
+  }) 
+}
+
+const getPoints = async () => {
+  const data = firebase.firestore().collection('users').doc(userInput)
+  await data.get().then((doc) => setPoints(doc.data().points))
 }
 
 const incrementCount = () => {
