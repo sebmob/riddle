@@ -13,6 +13,7 @@ const [ points, setPoints ] = useState(0);
 const [ isSolved, setIsSolved ] = useState([])
 const [ isLogin, setisLogin ] = useState(false)
 const [ user, setUser ] = useState('')
+const [ userValidation, setUserValidation ] = useState(false)
 
 const handleChange = (e) => setUserInput(e.target.value);
 
@@ -38,7 +39,9 @@ const handleSubmitLogin = async (e) => {
     querySnapshot.docs.map((doc) => {
      return users.push(doc.data().username)
     })
-    if (users.includes(userInput)) {
+    if(userInput.length < 3) {
+      setUserValidation(true)
+    } else if (users.includes(userInput)) {
       setisLogin(true)
       setUser(userInput)
       getSolved()
@@ -98,7 +101,7 @@ useEffect(() => {
     <div className="App">
       <header className="header">
         <h3 className="h3--title">Riddle Me This...</h3>
-        <h3 className="h3--points">{user} Points: {points}</h3>
+        {isLogin ? <h3 className="h3--points">{user} Points: {points}</h3> : <div></div>}
       </header>
       {isLogin ? 
               <Riddle 
@@ -111,10 +114,11 @@ useEffect(() => {
               isSolved={isSolved}
       />
       : 
-              <Login handleChange={handleChange} handleSubmitLogin={handleSubmitLogin}/>
+              <Login 
+              handleChange={handleChange}
+              handleSubmitLogin={handleSubmitLogin}
+              userValidation={userValidation}/>
       }
-        
-
     </div>
   );
 }
