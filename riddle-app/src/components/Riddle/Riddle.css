@@ -85,3 +85,9 @@
 .p--completed {
     text-align: center;
 }
+
+.p--wrongAnswer {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}

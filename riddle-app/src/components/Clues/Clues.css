@@ -1,0 +1,30 @@
+.div--clue--container {
+    display: flex;
+    flex-direction: column;
+}
+
+.button--clues {
+   margin-left: auto;
+   margin-right: auto;
+   border-radius: 5px;
+   border: 0px solid lightgray;
+   background-color: lightskyblue;
+   color: white;
+   padding: 10px;
+   width: fit-content;
+   outline: 0;
+}
+
+.button--clues:hover {
+   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.p--firstClue {
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.p--secondClue {
+    margin-left: auto;
+    margin-right: auto;
+ }
