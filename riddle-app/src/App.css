@@ -2,8 +2,10 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background-color: lightgray;
-  padding: 10px;
+  background-color: rgb(170, 185, 197);
+  height: 80px;
+  align-items: center;
+  position: relative;
 }
 
 .div--riddle--container {
@@ -11,6 +13,18 @@
   justify-content: center;
 }
 
-.h3--points {
-  margin-right: 30px;
+.button--leaderboard {
+  height: 80px;
+  font-size: 1.2em;
+  outline: 0;
+  border: 0;
+}
+
+.h3--title {
+  margin-left: 10px;
+}
+
+
+.button--leaderboard:hover {
+  background-color: lightgrey;
 }

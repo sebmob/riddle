@@ -104,21 +104,21 @@ const useSecondClue = () => {
 }
 
 const addpoints = () => {
-  if (userInput.toLowerCase() === riddles[count].answer.toLowerCase() && secondClue) {
+  if (userInput.toLowerCase().includes(riddles[count].answer.toLowerCase()) && secondClue) {
     setPoints(points + 1)
     firebase.firestore().collection('users').doc(user).update({
       points: points + 1,
       solved: firebase.firestore.FieldValue.arrayUnion(riddles[count].id)
     })
     setIsSolved(prevState => [...prevState, riddles[count].id])
-  } else if (userInput.toLowerCase() === riddles[count].answer.toLowerCase() && firstClue) {
+  } else if (userInput.toLowerCase().includes(riddles[count].answer.toLowerCase()) && firstClue) {
       setPoints(points + 3)
       firebase.firestore().collection('users').doc(user).update({
         points: points + 3,
         solved: firebase.firestore.FieldValue.arrayUnion(riddles[count].id)
       })
       setIsSolved(prevState => [...prevState, riddles[count].id])
-  } else if (userInput.toLowerCase() === riddles[count].answer.toLowerCase()) {
+  } else if (userInput.toLowerCase().includes(riddles[count].answer.toLowerCase())) {
       setPoints(points + 5)
       firebase.firestore().collection('users').doc(user).update({
         points: points + 5,
@@ -135,6 +135,7 @@ const addpoints = () => {
 useEffect(() => {
   const data = firebase.firestore().collection('users');
   data.onSnapshot((querySnapshot) => {
+    setLeaderboard([])
     querySnapshot.docs.map((doc) => {
       return setLeaderboard((prevState) => [ ...prevState, {
         user: doc.data().username,
@@ -149,6 +150,10 @@ useEffect(() => {
 
 const getAllPoints = () => {
   setViewLeaderboard(true)
+}
+
+const backToRiddles = () => {
+  setViewLeaderboard(false)
 }
 
 useEffect(() => {
@@ -173,12 +178,15 @@ useEffect(() => {
       <header className="header">
         <h3 className="h3--title">Riddle Me This...</h3>
         {isLogin ? <h3 className="h3--points">{user} Points: {points}</h3> : <div></div>}
-        {isLogin ? <button onClick={getAllPoints}>Leaderboard</button> : <div></div>}
+        <div>
+          {viewLeaderboard ? <button className="button--leaderboard" onClick={backToRiddles}>Back To Riddles</button> : <div></div>}
+          {isLogin ? <button className="button--leaderboard" onClick={getAllPoints}>Leaderboard</button> : <div></div>}
+        </div>
       </header>
 
       {viewLeaderboard ? <LeaderBoard leaderboard={leaderboard}/> : <div></div>}
 
-      {isLogin ? 
+      {isLogin && !viewLeaderboard ? 
               <Riddle 
               riddles={riddles}
               handleChange={handleChange}
@@ -193,12 +201,13 @@ useEffect(() => {
               secondClue={secondClue}
               wrongAnswer={wrongAnswer}
       />
-      : 
+      : <div></div>}
+      {!isLogin ?               
               <Login 
               handleChange={handleChange}
               handleSubmitLogin={handleSubmitLogin}
               userValidation={userValidation}/>
-      }
+               : <div></div>}
     </div>
   );
 }

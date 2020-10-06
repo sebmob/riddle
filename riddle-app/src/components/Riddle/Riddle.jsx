@@ -23,7 +23,7 @@ function Riddle({
                 <div>
                     <h4>{riddles[count].question}</h4>
                     {wrongAnswer ? <p className="p--wrongAnswer">Almost, try again!</p> : <p></p>}
-                    {isSolved.lenght !== 0 && isSolved.includes(riddles[count].id) ? <p className="p--completed">Completed!</p> :
+                {isSolved.lenght !== 0 && isSolved.includes(riddles[count].id) ? <p className="p--completed">You got it! {riddles[count].answer}</p> :
                     <form className="form--container" action="input" onSubmit={handleSubmit}>
                         <input className="input--answer" type="text" onChange={handleChange}/>
                         <input className="input--answer--submit" type="submit" value="Solve"/>

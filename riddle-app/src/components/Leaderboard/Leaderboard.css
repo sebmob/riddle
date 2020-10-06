@@ -1,0 +1,46 @@
+.table--leaderboard {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 20px;
+}
+
+tr:nth-child(odd) {
+    background-color: #f2f2f2;
+}
+
+.table--leaderboard th {
+    padding: 10px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+  }
+
+.table--leaderboard tr {
+    padding: 10px;
+    font-weight: 500;
+    font-size: 1.2em;
+}
+
+tr:hover {
+    background-color: lightgrey;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.div--table--container {
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    width: 700px;
+    border-radius: 10px;
+    border: 1px solid lightgrey;
+    padding: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+
+}
+
+td {
+    padding: 10px;
+}
+
+
