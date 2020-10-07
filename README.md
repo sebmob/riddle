@@ -1,4 +1,4 @@
-# Riddle Gamw
+# Riddle Game
 
 This is a React project building a riddle solvin game.
 The website uses firebase as a database to store the riddles and persist user data.
@@ -11,6 +11,8 @@ Clone down the project files and cd into the projects folder and install depende
 ```bash
 npm i
 npm start
+
+Or checkout the deployed version at https://riddle-me-this-app.netlify.app
 ```
 
 ## Usage
