@@ -1,6 +1,7 @@
 # Riddle Gamw
 
-This is a React project building a riddle solvin game. The website uses firebase as a database to store the riddles and persist user data.
+This is a React project building a riddle solvin game.
+The website uses firebase as a database to store the riddles and persist user data.
 The website is responsive for both smaller and bigger screens.
 
 ## Installation and Start
