@@ -6,25 +6,38 @@
 .button--clues {
    margin-left: auto;
    margin-right: auto;
-   border-radius: 5px;
+   border-radius: 25px;
    border: 0px solid lightgray;
    background-color: lightskyblue;
    color: white;
-   padding: 10px;
+   padding: 5px;
    width: fit-content;
    outline: 0;
+   width: 200px;
+   font-size: 1.2em;
 }
 
 .button--clues:hover {
    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+   background-color: rgb(189, 230, 255);
 }
 
 .p--firstClue {
+   padding: 10px;
    margin-left: auto;
    margin-right: auto;
 }
 
 .p--secondClue {
+    padding: 10px;
     margin-left: auto;
     margin-right: auto;
  }
+
+ @media only screen and (max-width: 425px) {
+      
+   .button--clues {
+         width: 150px;
+         font-size: 1em;
+      }
+   }

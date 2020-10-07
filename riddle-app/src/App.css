@@ -1,11 +1,14 @@
+* {
+  margin: 0%;
+}
+
 .header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   background-color: rgb(170, 185, 197);
   height: 80px;
   align-items: center;
-  position: relative;
+  justify-content: space-between;
 }
 
 .div--riddle--container {
@@ -18,13 +21,46 @@
   font-size: 1.2em;
   outline: 0;
   border: 0;
+  padding: 5px;
+  
 }
 
 .h3--title {
   margin-left: 10px;
 }
 
+.h3--points {
+  margin-left: 90px;
+}
+
 
 .button--leaderboard:hover {
   background-color: lightgrey;
 }
+
+.div--leaderboard--container {
+  display: flex;
+  flex-direction: row;
+  width: 260px;
+  justify-content: flex-end;
+}
+
+@media only screen and (max-width: 425px) {
+  .h3--title {
+    font-size: 0.9em;
+  }
+
+  .h3--points {
+    font-size: 0.9em;
+    margin-left: 5px;
+  }
+
+  .button--leaderboard {
+    font-weight: 600;
+    font-size: 0.7em;
+    width: 80px;
+    padding: 5px;
+  }
+}
+
+

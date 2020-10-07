@@ -1,3 +1,8 @@
+* {
+    box-sizing: border-box;
+    margin: 0em;
+    padding: 0em;
+}
 
 .div--riddle--container {
     display: flex;
@@ -10,6 +15,7 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+    width: 400px;
 }
 
 .div--riddle--container--solved {
@@ -91,4 +97,25 @@
     margin-left: auto;
     margin-right: auto;
     text-align: center;
+
 }
+
+.h4--question {
+    width: auto;
+    text-align: center;
+  
+}
+
+@media only screen and (max-width: 425px) {
+    .div--riddle--container--solved {
+        width: 300px;
+    }
+
+    .div--riddle--container {
+        width: 300px;
+    }
+
+    .input--answer {
+        width: 200px;
+    }
+  }

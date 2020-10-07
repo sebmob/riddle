@@ -177,8 +177,8 @@ useEffect(() => {
     <div className="App">
       <header className="header">
         <h3 className="h3--title">Riddle Me This...</h3>
-        {isLogin ? <h3 className="h3--points">{user} Points: {points}</h3> : <div></div>}
-        <div>
+        {isLogin ? <h3 className="h3--points">Points: {points}</h3> : <div></div>}
+        <div className="div--leaderboard--container">
           {viewLeaderboard ? <button className="button--leaderboard" onClick={backToRiddles}>Back To Riddles</button> : <div></div>}
           {isLogin ? <button className="button--leaderboard" onClick={getAllPoints}>Leaderboard</button> : <div></div>}
         </div>
