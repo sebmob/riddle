@@ -91,6 +91,7 @@
 
 .p--completed {
     text-align: center;
+    padding: 10px;
 }
 
 .p--wrongAnswer {
@@ -103,6 +104,8 @@
 .h4--question {
     width: auto;
     text-align: center;
+    height: 100px;
+    padding-top: 20px;
   
 }
 
